@@ -15,10 +15,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/fiorix/go-smpp/smpp/pdu"
-	"github.com/fiorix/go-smpp/smpp/pdu/pdufield"
-	"github.com/fiorix/go-smpp/smpp/pdu/pdutext"
-	"github.com/fiorix/go-smpp/smpp/pdu/pdutlv"
+	"github.com/donovansolms/go-smpp/smpp/pdu"
+	"github.com/donovansolms/go-smpp/smpp/pdu/pdufield"
+	"github.com/donovansolms/go-smpp/smpp/pdu/pdutext"
+	"github.com/donovansolms/go-smpp/smpp/pdu/pdutlv"
 )
 
 // ErrMaxWindowSize is returned when an operation (such as Submit) violates
@@ -328,7 +328,7 @@ func (t *Transmitter) Submit(sm *ShortMessage) (*ShortMessage, error) {
 // and returns and updates the given sm with the response status.
 // It returns the same sm object.
 func (t *Transmitter) SubmitLongMsg(sm *ShortMessage) (*ShortMessage, error) {
-	maxLen := 133 // 140-7 (UDH with 2 byte reference number)
+	maxLen := 153 // 160-7 (UDH with 2 byte reference number)
 	if sm.Text.Type() == pdutext.UCS2Type {
 		maxLen = 132 // to avoid a character being split between payloads
 	}
