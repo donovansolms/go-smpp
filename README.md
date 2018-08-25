@@ -1,3 +1,5 @@
+This fork is for testing SMPP 3.4 functionality. Do not use. Rather use the package this was forked from at [github.com/fiorix/go-smpp](https://github.com/fiorix/go-smpp)
+
 # SMPP 3.4
 
 [![GoDoc](https://godoc.org/github.com/fiorix/go-smpp?status.svg)](https://godoc.org/github.com/fiorix/go-smpp) [![Go Report Card](https://goreportcard.com/badge/github.com/fiorix/go-smpp)](https://goreportcard.com/report/github.com/fiorix/go-smpp) [![Build Status](https://secure.travis-ci.org/fiorix/go-smpp.png)](https://travis-ci.org/fiorix/go-smpp)
