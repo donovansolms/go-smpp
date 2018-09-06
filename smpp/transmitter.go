@@ -196,10 +196,18 @@ type ShortMessage struct {
 	SMDefaultMsgID       uint8
 	NumberDests          uint8
 
+	subm 				 pdu.Body
 	resp struct {
 		sync.Mutex
 		p pdu.Body
 	}
+}
+
+// SubmittedPDU returns the submitted PDU, or nil if not set.
+func (sm *ShortMessage) SubmittedPDU() pdu.Body {
+	sm.resp.Lock()
+	defer sm.resp.Unlock()
+	return sm.subm
 }
 
 // Resp returns the response PDU, or nil if not set.
@@ -377,6 +385,7 @@ func (t *Transmitter) SubmitLongMsg(sm *ShortMessage) (*ShortMessage, error) {
 			return nil, err
 		}
 		sm.resp.Lock()
+		sm.subm = p
 		sm.resp.p = resp.PDU
 		sm.resp.Unlock()
 		if resp.PDU == nil {
@@ -422,6 +431,7 @@ func (t *Transmitter) submitMsg(sm *ShortMessage, p pdu.Body, dataCoding uint8) 
 		return nil, err
 	}
 	sm.resp.Lock()
+	sm.subm = p
 	sm.resp.p = resp.PDU
 	sm.resp.Unlock()
 	if resp.PDU == nil {
@@ -489,6 +499,7 @@ func (t *Transmitter) submitMsgMulti(sm *ShortMessage, p pdu.Body, dataCoding ui
 		return nil, err
 	}
 	sm.resp.Lock()
+	sm.subm = p
 	sm.resp.p = resp.PDU
 	sm.resp.Unlock()
 	if resp.PDU == nil {
